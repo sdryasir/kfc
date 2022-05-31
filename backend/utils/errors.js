@@ -1,1 +1,0 @@
-const ErrorHandler = require('./errorHandler')
