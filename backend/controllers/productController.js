@@ -1,6 +1,4 @@
 const Product = require('../models/productSchema');
-const ErrorHandler = require('../utils/errorHandler');
-const cloudinary = require('cloudinary').v2
 
 exports.createProduct = async (req, res, next)=>{
     const body = req.body;
@@ -11,7 +9,7 @@ exports.createProduct = async (req, res, next)=>{
             message:"success",
         })
     } catch (error) {
-        next(new ErrorHandler(error, 400));
+        next(error);
     }
 }
 exports.getAllProducts = async (req, res, next)=>{
@@ -22,7 +20,7 @@ exports.getAllProducts = async (req, res, next)=>{
             data:products
         })
     } catch (error) {
-        next(new ErrorHandler(error, 400));
+        next(error)
     }
 }
 exports.getProductById = async (req, res, next)=>{
@@ -34,7 +32,7 @@ exports.getProductById = async (req, res, next)=>{
             data:product
         })
     } catch (error) {
-        next(new ErrorHandler(error, 400));
+        next(error);
     }
 }
 exports.updateProduct = async (req, res, next)=>{
@@ -47,7 +45,7 @@ exports.updateProduct = async (req, res, next)=>{
             message:"success"
         })
     } catch (error) {
-        next(new ErrorHandler(error, 400)); 
+        next(error)
     }
 }
 exports.deleteProduct = async (req, res, next)=>{
@@ -60,6 +58,6 @@ exports.deleteProduct = async (req, res, next)=>{
             message:'Product has been removed'
         })
     } catch (error) {
-        next(new ErrorHandler(error, 400));
+        next(error);
     }
 }
