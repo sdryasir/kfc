@@ -4,10 +4,9 @@ export const productReducer = (state = { products:[] }, action)=>{
             return {
                 products: action.payload
             }
-        case 'ADD_PRODUCTS':
+        case 'ADD_PRODUCT':
             return {
-                ...state.products,
-                message: action.payload
+                products: action.payload
             }
         default:
             return state

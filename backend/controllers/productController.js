@@ -1,13 +1,23 @@
 const Product = require('../models/productSchema');
+const cloudinary = require('cloudinary').v2;
 
 exports.createProduct = async (req, res, next)=>{
     const body = req.body;
+
+    const productImage = body.productImage;
+
+    const result = await cloudinary.uploader.upload(productImage, {
+        'folder':'kfc'
+    })
+
+    body.productImage = result.secure_url;
+    
     try {
-        const product = await Product.create(body);
+        await Product.create(body);
+        const products = await Product.find({});
         res.json({
             status: true,
-            message:"success",
-            product
+            data:products
         })
     } catch (error) {
         next(error);

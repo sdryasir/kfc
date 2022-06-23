@@ -4,13 +4,20 @@ require('dotenv').config();
 const bodyParser = require('body-parser')
 const products = require('./routes/products')
 const { connectDatabase } = require('./config/config');
+const cloudinary = require('cloudinary').v2
 const cors = require('cors')
 
 connectDatabase();
 app.use(cors())
-app.use(bodyParser());
+app.use(bodyParser({limit: '50mb'}));
+app.use(express.urlencoded({ extended: true}))
 app.use('/api/v1', products);
 
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+})
 
 app.use((err, req, res, next) => {
   let error = { ...err }

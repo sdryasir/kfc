@@ -9,9 +9,14 @@ export const getAllProducts = () => async (dispatch) => {
 }
 
 export const addNewProduct = (product) => async (dispatch) => {
-    const response = await axios.post(`http://localhost:9000/api/v1/product/new`, product);
+    const config = {
+        headers: {
+            'content-type': 'application/json'
+        }
+    }
+    const response = await axios.post(`http://localhost:9000/api/v1/product/new`, product, config);
     dispatch({
-        type:'ADD_PRODUCTS',
+        type:'ADD_PRODUCT',
         payload: response.data
     })
 }
