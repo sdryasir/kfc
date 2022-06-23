@@ -1,40 +1,21 @@
 import React from 'react'
+import { useState } from 'react';
 import { useEffect } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import { getAllProducts } from '../../redux/actions/productActions'
-import './product.css'
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { addNewProduct } from '../../redux/actions/productActions'
+import AddModal from './AddModal';
+import './product.css';
 
 const Product = () => {
 
   const dispatch = useDispatch();
   const {products} = useSelector(state=>state.products)
 
+  const [showModal, setShowModal] = useState(false)
+
   useEffect(()=>{
     dispatch(getAllProducts());
   }, [])
-
-
-  const {handleChange, handleSubmit, handleblur, values, touched, errors} = useFormik({
-    initialValues:{
-      title:'',
-      description:'',
-      price:'',
-      stock:'',
-      image:''
-    },
-    validationSchema: Yup.object({
-      title:Yup.string().required('title is required'),
-      description:Yup.string().required('description is required'),
-      price:Yup.string().required('price is required'),
-      stock:Yup.string().required('stock is required'),
-    }),
-    onSubmit: (values)=>{
-      dispatch(addNewProduct(values));
-    }
-  })
 
   return (
     <>
@@ -43,12 +24,10 @@ const Product = () => {
         <h1 class="h2">Products</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
           <div class="btn-group me-2">
-            <button type="button" class="btn btn-sm btn-outline-secondary">Add New</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary" onClick={()=>setShowModal(true)}>Add New</button>
           </div>
         </div>
       </div>
-
-      <h2>Section title</h2>
       <div class="table-responsive">
         <table class="table table-striped table-sm">
           <thead>
@@ -79,31 +58,7 @@ const Product = () => {
         </table>
       </div>
     </main>
-    <div className="modal-overlay-wrapper">
-        <div className="modal-overlay-inner">
-        <form class="row g-3" onSubmit={handleSubmit}>
-          <div class="col-md-6">
-            <label for="title" class="form-label">Title</label>
-            <input type="text" name='title' onChange={handleChange} onBlur={handleblur} value={values.title}  class="form-control" id="title"/>
-          </div>
-          <div class="col-md-6">
-            <label for="description" class="form-label">Description</label>
-            <input type="text" name='description' onChange={handleChange} onBlur={handleblur} value={values.description} class="form-control" id="description"/>
-          </div>
-          <div class="col-12">
-            <label for="price" class="form-label">Price</label>
-            <input type="number" name='price' onChange={handleChange} onBlur={handleblur} value={values.price} class="form-control" id="price"/>
-          </div>
-          <div class="col-12">
-            <label for="stock" class="form-label">Stock</label>
-            <input type="number" name='stock' onChange={handleChange} onBlur={handleblur} value={values.stock} class="form-control" id="stock" placeholder="Apartment, studio, or floor"/>
-          </div>
-          <div class="col-12">
-            <button type="submit" class="btn btn-primary">Save Product</button>
-          </div>
-        </form>
-        </div>
-    </div>
+    {showModal ? <AddModal setShowModal={setShowModal}/> : null}
     </>
   )
 }

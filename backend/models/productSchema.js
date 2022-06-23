@@ -19,7 +19,7 @@ const productSchema = new Schema({
       type:Number,
       required:[true, 'stock is required']
   },
-  image:{
+  productImage:{
       type:String
   }
 },
