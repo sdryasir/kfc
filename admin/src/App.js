@@ -10,6 +10,7 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
+import EditProduct from './pages/Product/EditProduct';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
               <Route path='/home' element={<Home />} />
               <Route path='/products' element={<Product />} />
               <Route path='/orders' element={<Order />} />
+              <Route path='/edit-product/:id' element={<EditProduct />} />
             </Routes>
           </div>
         </div>

@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import { getAllProducts } from '../../redux/actions/productActions'
 import AddModal from './AddModal';
 import './product.css';
+import {Link} from 'react-router-dom'
 
 const Product = () => {
 
@@ -37,6 +38,7 @@ const Product = () => {
               <th scope="col">Description</th>
               <th scope="col">Price</th>
               <th scope="col">Stock</th>
+              <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -50,6 +52,10 @@ const Product = () => {
                     <td>{product.description}</td>
                     <td>{product.price}</td>
                     <td>{product.stock}</td>
+                    <td>
+                      <Link className="btn btn-primary me-2" to={`/edit-product/${product._id}`}>Edit</Link>
+                      <Link className="btn btn-danger" to="">Delete</Link>
+                    </td>
                   </tr>
                 )
               })

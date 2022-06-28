@@ -8,6 +8,14 @@ export const getAllProducts = () => async (dispatch) => {
     })
 }
 
+export const getProductById = (id) => async (dispatch) => {
+    const response = await axios.get(`http://localhost:9000/api/v1/product/${id}`);
+    dispatch({
+        type:'SINGLE_PRODUCT',
+        payload: response.data
+    })
+}
+
 export const addNewProduct = (product) => async (dispatch) => {
     const config = {
         headers: {
